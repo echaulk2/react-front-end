@@ -1,38 +1,25 @@
-import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
-import React, { useState } from 'react';
-import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
-import UserPool from '../UserPool';
+import React, { useState, useContext } from 'react';
+import { AccountContext } from './Account';
 import { Form, Input, Button } from 'antd';
 import 'antd/dist/antd.css';
 import { UserOutlined, MailFilled, LockFilled } from '@ant-design/icons';
+import jQuery from 'jquery';
+const $ = jQuery;
 
 const Login = () => {
     const [userName, setUserName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const onFinish = (values: any) => {
-        const user = new CognitoUser({
-            Username: userName,
-            Pool: UserPool
-        });
-
-        const authDetails = new AuthenticationDetails({
-            Username: userName,
-            Password: password
-        });
-
-        user.authenticateUser(authDetails, {
-            onSuccess: (data) => {
-                console.log("onSuccess: ", data);
-            },
-            onFailure: (err) => {
-                console.error("onFailure: ", err);
-            },
-            newPasswordRequired: (data) => {
-                console.log("newPasswordRequired: ", data);
-            }
-        });
+    const { authenticate } = useContext(AccountContext);
+    const onFinish = () => {
+        authenticate(userName, password)
+        .then((data: any) => {
+            console.log("Logged in!", data);
+        })
+        .catch((err: Error) => {
+            console.error("Failed to login", err);
+        })
     };
 
     const onFinishFailed = (errorInfo: any) => {
@@ -40,8 +27,13 @@ const Login = () => {
         console.log('Failed:', errorInfo);
     };
 
+    const toggleClass = () => {
+        $('#login-form-container').hide()
+        $('#signup-form-container').show()
+    };
+    
     return(
-        <div id="login-form-container">
+        <div id="login-form-container" className="form-container">
             <h1>Log In</h1>
             <Form name="loginForm" className="login-form" layout={"horizontal"}
                 labelCol={{ span: 6 }}
@@ -105,6 +97,11 @@ const Login = () => {
                 <Form.Item wrapperCol={{ offset: 6, span: 6 }}>
                     <Button type="primary" htmlType="submit" onSubmit={e => e.preventDefault()}>
                     Log in
+                    </Button>
+                </Form.Item>
+                <Form.Item wrapperCol={{ offset: 6, span: 6 }}>
+                    <Button type="link" onClick={toggleClass}>
+                    Create an Account
                     </Button>
                 </Form.Item>
             </Form>
