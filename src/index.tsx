@@ -1,16 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
+import { Collection } from './collection';
 import reportWebVitals from './reportWebVitals';
-
+import Signup from './Components/Signup';
+import Login from './Components/Login';
+import './index.css';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+let token = 'eyJraWQiOiJ6V2hEV2owR09iZ1ZqNTFjUEtMV3QxV3orRkxYYjI4ZDlsSkE4dG91RVZ3PSIsImFsZyI6IlJTMjU2In0.eyJhdF9oYXNoIjoiMmtWWTNPSjR2UWlZdm9zMkQ1MXpmdyIsInN1YiI6IjkxOGNjOGE0LWY4NDgtNGYwMS1iODNjLTA5N2I3YzBhY2M2MSIsImNvZ25pdG86Z3JvdXBzIjpbInVzLWVhc3QtMV9QcDAwRm9McE1fR29vZ2xlIl0sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV9QcDAwRm9McE0iLCJjb2duaXRvOnVzZXJuYW1lIjoiR29vZ2xlXzExMzY5MTQyOTYzOTc4NDYwODAzNyIsIm5vbmNlIjoiT2xIMnVnQjc1R1JlQThFN3hBUVVtako0dmVwVzV0RnVBWGRqOVJtLWpJM2hWVVFvbjNmcFpLS0swTjdzNVF1SjlaR3Q1YjNoZThfa0t3MUs2eW44a0sxdWV0bUMyVXNtYkc3MG9BNExGQWZaTkgycHc0QVh1TnMyV1ItTV9fczlDb0lDZTZkS3pWMnI2ZnNyclpQRlVaTFhUeE5FWmpndU1kelZpY1RORVpZIiwiYXVkIjoiMzFuZmhwY3NzcjlwbHFpYnQ4MXZzMDYxa2oiLCJpZGVudGl0aWVzIjpbeyJ1c2VySWQiOiIxMTM2OTE0Mjk2Mzk3ODQ2MDgwMzciLCJwcm92aWRlck5hbWUiOiJHb29nbGUiLCJwcm92aWRlclR5cGUiOiJHb29nbGUiLCJpc3N1ZXIiOm51bGwsInByaW1hcnkiOiJ0cnVlIiwiZGF0ZUNyZWF0ZWQiOiIxNjUwMzMxNTA5NzQzIn1dLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTY1NTY2MzY5NiwiZXhwIjoxNjU1NjY3Mjk2LCJpYXQiOjE2NTU2NjM2OTYsImp0aSI6IjBlNmNjZjEyLWIxZDUtNDRlYi04YTkyLTUzYTIyMjQxYzI4NyIsImVtYWlsIjoiZXJpa2NoYXVsa0BnbWFpbC5jb20ifQ.VBBAlyu4OjpgPN5Qy6zfy4hGPpNF0yvLxukG_d8lOwY73TygSmnkf3_lFgU5FjQ3It7T2Yc6TKEuIOSNM3bX11Oo_k1djidIwB1FyWYTZaJ-peBpUr2qraMRKKzW3WWKzT3AKd5mPqysQqzUWazcuR-cmns_DoElNAEzVyoHHiJL0RDBD1ZNcZySAHf6fo333UdsBwgHPeeJcz94qyu88AiQ1gEdE9apDT0z0qkdPpgsmazOWzp25FZL3Zvs0oN7mHV7KxWRc3EtSrNx2Ln0Nl8nZlf9xjA2vFMKnMyfDdemde3gYu0bfp1b2fZc0Qr5W7lTY87BzgGSjp7XrbWj2A';
+let url = 'https://o735335eqe.execute-api.us-east-1.amazonaws.com/prod/collection/wishlist/?collectionID=Col-116746a9-c822-4ffe-a67d-946f8188e153';
+
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <div>
+    <Login />
+  </div>
 );
 
 // If you want to start measuring performance in your app, pass a function

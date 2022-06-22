@@ -10,6 +10,10 @@
     "@types/node": "^16.11.41",
     "@types/react": "^18.0.13",
     "@types/react-dom": "^18.0.5",
+    "amazon-cognito-identity-js": "^5.2.9",
+    "amazon-cognito-identity-js-typescript": "^1.22.0",
+    "antd": "^4.21.3",
+    "jquery": "^3.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -39,5 +43,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.5.14"
   }
 }
