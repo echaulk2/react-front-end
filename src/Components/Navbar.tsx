@@ -1,5 +1,5 @@
 import { CognitoUserSession } from 'amazon-cognito-identity-js';
-import { Menu, Button, Drawer, Dropdown } from 'antd'
+import { Menu } from 'antd'
 import React, { useContext, useEffect, useState } from 'react'
 import { AccountContext } from './Account';
 
@@ -7,8 +7,11 @@ const Navbar = () => {
   const { getSession, userStatus, userSetStatus, currentUser } = useContext(AccountContext);
 
   useEffect(() => {
-      getSession();
-  }, [userStatus]);
+    getSession().then((session: any) => {
+        console.log("Session: ", session);
+        userSetStatus(true);
+    }).catch((err: any) => {})
+  }, []);   
 
   return (
     <Menu className="main-navbar">

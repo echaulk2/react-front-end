@@ -5,11 +5,15 @@ import ChangeEmail from './ChangeEmail';
 import ChangePassword from './ChangePassword';
 
 export default () => {
-    const { getSession, logout, currentUser } = useContext(AccountContext);
+    const { getSession, logout, userSetStatus, currentUser } = useContext(AccountContext);
 
     useEffect(() => {
-        getSession();
-    }, []);
+        getSession().then((session: any) => {
+            console.log("Session: ", session);
+            userSetStatus(true);
+        }).catch((err: any) => {})
+    }, []);   
+    
   return (
     <div>{currentUser && (
         <div id="login-form-container" className="form-container">

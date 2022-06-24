@@ -35,8 +35,12 @@ const Login = (props: any) => {
     };  
 
     useEffect(() => {
-        getSession();
-    }, [userStatus]);   
+        getSession().then((session: any) => {
+            console.log("Session: ", session);
+            userSetStatus(true);
+        }).catch((err: any) => {})
+    }, []);   
+      
     return(  
         <div id="login-form-container" className="form-container">
             <h1>Login</h1>
