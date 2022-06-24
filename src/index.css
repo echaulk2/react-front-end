@@ -1,29 +1,20 @@
 @import '~antd/dist/antd.css';
 
-#root {
-    user-select: none;
-    overflow-y: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #dde5f4;
-    height: 100vh;
-}
-
 .form-container {
-    height: 520px;
-    width: 400px;
     background-color: rgba(255,255,255,0.13);
     border-radius: 10px;
     backdrop-filter: blur(10px);    
-    position: relative;
     border: 2px solid rgba(255,255,255,0.1);
     box-shadow: 0 0 40px rgba(8,7,16,0.6);
     padding: 50px 35px;
-    margin: 0 10px;
-    display: inline-block;
+    justify-content: center;
 }
 
+#login-form-container, #signup-form-container {
+    height: fit-content;
+    width: fit-content;
+    margin: 0 auto;
+}
 .form-container h1 {
     text-align: center;
 }
@@ -34,4 +25,12 @@
 
 .hide-form {
     display: none;
+}
+
+.main-navbar {
+    padding: 0 20px;
+    border-bottom: solid 1px #e8e8e8;
+    overflow: auto;
+    box-shadow: 0 0 30px #f3f1f1;
+    margin-bottom:500px;
 }

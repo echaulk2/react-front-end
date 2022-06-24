@@ -4,6 +4,9 @@ import UserPool from '../UserPool';
 import { Form, Input, Button } from 'antd';
 import 'antd/dist/antd.css';
 import { UserOutlined, MailFilled, LockFilled } from '@ant-design/icons';
+import jQuery from 'jquery';
+import Navbar from './Navbar';
+const $ = jQuery;
 
 const Signup = () => {
     const [userName, setUserName] = useState("");
@@ -11,13 +14,7 @@ const Signup = () => {
     const [password, setPassword] = useState("");
     
     const onFinish = (event: any) => {
-        event.preventDefault();
-        let emailData = {
-            Name: 'email',
-            Value: email
-        };
-        let userAttributes = [new CognitoUserAttribute(emailData)]; 
-        UserPool.signUp(userName, password, userAttributes, [], (err, data) => {
+        UserPool.signUp(userName, password, [new CognitoUserAttribute({Name: "email", Value: email})], [], (err, data) => {
             if (err) {
                 console.log(err);
             }
@@ -98,13 +95,13 @@ const Signup = () => {
                     />
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 6, span: 6 }}>
-                    <Button type="primary" htmlType="submit" onSubmit={e => e.preventDefault()}>
+                    <Button type="primary" htmlType="submit">
                     Sign Up
                     </Button>
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 6, span: 6 }}> 
                     <Button type="link" onClick={toggleClass}>
-                    Already have an account.  Sign in.
+                    Already have an account?  Sign in.
                     </Button>
                 </Form.Item>
             </Form>

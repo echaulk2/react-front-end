@@ -1,21 +1,23 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { AccountContext } from './Account';
 import { Form, Input, Button } from 'antd';
 import 'antd/dist/antd.css';
 import { UserOutlined, MailFilled, LockFilled } from '@ant-design/icons';
 import jQuery from 'jquery';
+import Settings from './Settings';
+import Status from './Status';
 const $ = jQuery;
 
-const Login = () => {
+const Login = (props: any) => {
     const [userName, setUserName] = useState("");
-    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const { getSession, authenticate, userStatus, userSetStatus } = useContext(AccountContext);
 
-    const { authenticate } = useContext(AccountContext);
-    const onFinish = () => {
+    const onFinish = (event: any) => {              
         authenticate(userName, password)
         .then((data: any) => {
             console.log("Logged in!", data);
+            userSetStatus(true);
         })
         .catch((err: Error) => {
             console.error("Failed to login", err);
@@ -30,11 +32,19 @@ const Login = () => {
     const toggleClass = () => {
         $('#login-form-container').hide()
         $('#signup-form-container').show()
-    };
+    };  
+
+    useEffect(() => {
+        getSession().then((session: any) => {
+            console.log("Session: ", session);
+            userSetStatus(true);
+        }).catch((err: any) => {})
+    }, []);   
+
     
-    return(
-        <div id="login-form-container" className="form-container">
-            <h1>Log In</h1>
+    const userLoginForm = 
+        <div>
+            <h1>Login</h1>
             <Form name="loginForm" className="login-form" layout={"horizontal"}
                 labelCol={{ span: 6 }}
                 wrapperCol={{ span: 16 }}
@@ -61,23 +71,6 @@ const Login = () => {
                     />
                 </Form.Item>
                 <Form.Item 
-                    label="Email" 
-                    name="email" 
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your email!',
-                        },
-                    ]}>
-                    <Input  
-                        prefix={<MailFilled />} 
-                        type="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(event:React.ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)}
-                    />
-                </Form.Item>
-                <Form.Item 
                     label="Password" 
                     name="password" 
                     rules={[
@@ -95,16 +88,28 @@ const Login = () => {
                     />
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 6, span: 6 }}>
-                    <Button type="primary" htmlType="submit" onSubmit={e => e.preventDefault()}>
-                    Log in
-                    </Button>
+                    <Status/>                    
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 6, span: 6 }}>
                     <Button type="link" onClick={toggleClass}>
                     Create an Account
                     </Button>
                 </Form.Item>
+                
             </Form>
+        </div>
+
+    const userSettingsForm = 
+        <div>
+            <h1>You are logged in</h1>            
+            <Settings />
+            <Status/>
+        </div>
+    return(  
+        <div>
+            <div id="login-form-container" className="form-container">
+                { userStatus ? userSettingsForm : userLoginForm }   
+            </div>
         </div>
     )
 }

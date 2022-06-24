@@ -4,13 +4,14 @@ import Login from './Components/Login'
 import { Account } from './Components/Account'
 import Status from './Components/Status'
 import Settings from './Components/Settings'
+import Navbar from './Components/Navbar'
+
 function App() {
   return (
     <Account>
-        <Status />
+        <Navbar />
         <Signup />
         <Login />
-        <Settings />
     </Account>
   )
 }

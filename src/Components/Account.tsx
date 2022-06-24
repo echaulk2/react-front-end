@@ -1,11 +1,12 @@
-import React, { createContext } from 'react'
+import React, { useState, createContext } from 'react'
 import { CognitoUser, AuthenticationDetails, CognitoUserAttribute } from 'amazon-cognito-identity-js';
 import Pool from '../UserPool';
-import * as Interfaces from "../shared/interfaces";
+import { Context } from 'vm';
 
-const AccountContext = createContext({} as any);
+const AccountContext = createContext({} as Context);
 
 const Account = (props: any) => {
+    const [userStatus, userSetStatus] = useState(false);
     const getSession = async() => {
         return await new Promise((resolve, reject) => {
             const user = Pool.getCurrentUser();
@@ -64,10 +65,11 @@ const Account = (props: any) => {
         const user = Pool.getCurrentUser();
         if (user) {
             user.signOut();
+            userSetStatus(false);
         }
     }
   return (
-      <AccountContext.Provider value={{ authenticate, getSession, logout }}>
+      <AccountContext.Provider value={{ authenticate, getSession, logout, userStatus, userSetStatus }}>
           {props.children}
       </AccountContext.Provider>
   )

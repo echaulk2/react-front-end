@@ -15,9 +15,8 @@ export default () => {
   return (
     <div>{loggedin && (
         <>
-            <h2>Settings</h2>
-            <ChangePassword />
             <ChangeEmail />
+            <ChangePassword />
         </>
     )}
     </div>
