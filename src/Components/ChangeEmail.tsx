@@ -3,6 +3,7 @@ import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
 import { AccountContext } from './Account';
 import { CognitoUser } from 'amazon-cognito-identity-js';
 import { Button, Form, Input } from 'antd';
+
 export default () => {
     const [newEmail, setNewEmail] = useState("");
     const [password, setPassword] = useState("");

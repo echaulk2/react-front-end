@@ -1,29 +1,32 @@
-import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
+import { CognitoUserAttribute, ISignUpResult } from 'amazon-cognito-identity-js';
 import React, { useState } from 'react'
 import UserPool from '../UserPool';
 import { Form, Input, Button } from 'antd';
 import 'antd/dist/antd.css';
 import { UserOutlined, MailFilled, LockFilled } from '@ant-design/icons';
 import jQuery from 'jquery';
-import Navbar from './Navbar';
+import { ValidateErrorEntity } from 'rc-field-form/lib/interface';
 const $ = jQuery;
 
-const Signup = () => {
+const Signup = (props: any) => {
     const [userName, setUserName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     
-    const onFinish = (event: any) => {
-        UserPool.signUp(userName, password, [new CognitoUserAttribute({Name: "email", Value: email})], [], (err, data) => {
+    const onFinish = () => {
+        UserPool.signUp(userName, password, [new CognitoUserAttribute({Name: "email", Value: email})], [], (err?: Error, data?: ISignUpResult) => 
+        {
             if (err) {
-                console.log(err);
-            }
-            console.log(data);
+                console.error(err);
+            } else if (data) {
+                console.log(data);
+                !data.userConfirmed && alert('Please confirm your account before logging in.')
+            }            
         });
     };
 
-    const onFinishFailed = (errorInfo: any) => {
-        alert('Failed!')
+    const onFinishFailed = (errorInfo: ValidateErrorEntity) => {
+        alert(`Failed! - ${errorInfo.errorFields.map((err) => {return err.errors})}`);
         console.log('Failed:', errorInfo);
     };
     
@@ -36,7 +39,7 @@ const Signup = () => {
         <div id="signup-form-container" className="form-container hide-form">
             <h1>Sign Up</h1>
             <Form name="signUpForm" className="signup-form" layout={"horizontal"}
-                labelCol={{ span: 6 }}
+                labelCol={{ span: 8 }}
                 wrapperCol={{ span: 16 }}
                 initialValues={{
                     remember: true,
@@ -94,7 +97,7 @@ const Signup = () => {
                         onChange={(event:React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)}
                     />
                 </Form.Item>
-                <Form.Item wrapperCol={{ offset: 6, span: 6 }}>
+                <Form.Item wrapperCol={{ offset: 8, span: 6 }}>
                     <Button type="primary" htmlType="submit">
                     Sign Up
                     </Button>

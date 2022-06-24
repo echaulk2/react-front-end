@@ -2,10 +2,9 @@ import React, { useState, useContext, useEffect } from 'react';
 import { AccountContext } from './Account';
 import { Form, Input, Button } from 'antd';
 import 'antd/dist/antd.css';
-import { UserOutlined, MailFilled, LockFilled } from '@ant-design/icons';
+import { UserOutlined, LockFilled } from '@ant-design/icons';
 import jQuery from 'jquery';
-import Settings from './Settings';
-import Status from './Status';
+import { Session } from 'inspector';
 const $ = jQuery;
 
 const Login = (props: any) => {
@@ -13,13 +12,14 @@ const Login = (props: any) => {
     const [password, setPassword] = useState("");
     const { getSession, authenticate, userStatus, userSetStatus } = useContext(AccountContext);
 
-    const onFinish = (event: any) => {              
+    const onFinish = () => {              
         authenticate(userName, password)
-        .then((data: any) => {
+        .then((data: Session) => {
             console.log("Logged in!", data);
             userSetStatus(true);
         })
         .catch((err: Error) => {
+            alert(`Failed to login ${err.message}`);
             console.error("Failed to login", err);
         })
     };
@@ -35,18 +35,13 @@ const Login = (props: any) => {
     };  
 
     useEffect(() => {
-        getSession().then((session: any) => {
-            console.log("Session: ", session);
-            userSetStatus(true);
-        }).catch((err: any) => {})
-    }, []);   
-
-    
-    const userLoginForm = 
-        <div>
+        getSession();
+    }, [userStatus]);   
+    return(  
+        <div id="login-form-container" className="form-container">
             <h1>Login</h1>
             <Form name="loginForm" className="login-form" layout={"horizontal"}
-                labelCol={{ span: 6 }}
+                labelCol={{ span: 8 }}
                 wrapperCol={{ span: 16 }}
                 initialValues={{
                     remember: true,
@@ -87,29 +82,15 @@ const Login = (props: any) => {
                         onChange={(event:React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)}
                     />
                 </Form.Item>
-                <Form.Item wrapperCol={{ offset: 6, span: 6 }}>
-                    <Status/>                    
+                <Form.Item wrapperCol={{ offset: 8, span: 6 }}>
+                    <Button type="primary" htmlType="submit">Login</Button>
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 6, span: 6 }}>
                     <Button type="link" onClick={toggleClass}>
                     Create an Account
                     </Button>
-                </Form.Item>
-                
+                </Form.Item>                
             </Form>
-        </div>
-
-    const userSettingsForm = 
-        <div>
-            <h1>You are logged in</h1>            
-            <Settings />
-            <Status/>
-        </div>
-    return(  
-        <div>
-            <div id="login-form-container" className="form-container">
-                { userStatus ? userSettingsForm : userLoginForm }   
-            </div>
         </div>
     )
 }

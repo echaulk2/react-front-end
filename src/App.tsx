@@ -1,17 +1,13 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import Signup from './Components/Signup'
 import Login from './Components/Login'
-import { Account } from './Components/Account'
-import Status from './Components/Status'
-import Settings from './Components/Settings'
-import Navbar from './Components/Navbar'
+import { Account, AccountContext } from './Components/Account'
+import Home from './Components/Home'
 
 function App() {
   return (
     <Account>
-        <Navbar />
-        <Signup />
-        <Login />
+        <Home />
     </Account>
   )
 }
